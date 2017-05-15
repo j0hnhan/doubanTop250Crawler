@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from util import download_page 
 
+# Find div named info get detail and rating
 def parse_page(html):
     soup = BeautifulSoup(html,'html.parser')
     if soup.find('title').getText() == '页面不存在':
@@ -11,7 +12,8 @@ def parse_page(html):
     rating = soup.find('strong', property="v:average").getText()
     dictionary['评分'] = rating
     return dictionary
-    
+
+# Fetch detail
 def get_info(info_soup):
     dictionary = dict()
     for sub_soup in info_soup:
@@ -33,7 +35,8 @@ def get_info(info_soup):
         dictionary['上映日期'] = sub_soup.find('span', property="v:initialReleaseDate").getText()
     
     return dictionary        
-    
+
+# Return dictionary
 def get_movie_info(url):
     html = download_page(url)
     dictionary = parse_page(html)

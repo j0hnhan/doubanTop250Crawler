@@ -6,6 +6,8 @@ from util import download_page
 
 DOWNLOAD_URL = 'http://movie.douban.com/top250'
 
+# For every movie in li, extract its title, find its page url, parse it
+# store name,dictionary as tuple and return every page
 def parse_html(html):
     soup = BeautifulSoup(html, "html.parser")
     movie_list_soup = soup.find('ol',attrs={'class':'grid_view'})
@@ -23,6 +25,7 @@ def parse_html(html):
         return movie_list, DOWNLOAD_URL+next_page['href']
     return movie_list,None
 
+# Main method, fetch and write it into 'movies.txt'
 def main():
     url = DOWNLOAD_URL
     
